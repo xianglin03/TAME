@@ -197,12 +197,17 @@ rebuttle/test_data/
 prompt.txt
 data/**/adult.test
 
-# Large media files
+# Large media files (exclude in subdirs, keep root for README)
 *.png
+!/*.png
 *.pdf
+!/*.pdf
 *.jpg
+!/*.jpg
 *.jpeg
+!/*.jpeg
 *.gif
+!/*.gif
 
 # Claude
 .claude/
