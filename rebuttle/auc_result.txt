@@ -1,0 +1,31 @@
+==================== shoppers ====================
+
+===== shoppers TSTR AUC Results =====
+                setting       auc  auc_ratio_vs_real
+0          Real -> Real  0.923154           1.000000
+1       TabDDPM -> Real  0.914301           0.990411
+2  TabDDPM+TAME -> Real  0.919792           0.974693
+
+==================== adult ====================
+
+===== adult TSTR AUC Results =====
+                setting       auc  auc_ratio_vs_real
+0          Real -> Real  0.916113           1.000000
+1       TabDDPM -> Real  0.909464           0.992743
+2  TabDDPM+TAME -> Real  0.906939           0.989987
+
+==================== cardio ====================
+
+===== cardio TSTR AUC Results =====
+                setting       auc  auc_ratio_vs_real
+0          Real -> Real  0.798598           1.000000
+1       TabDDPM -> Real  0.796421           0.997273
+2  TabDDPM+TAME -> Real  0.794871           0.995333
+
+==================== default ====================
+
+===== default TSTR AUC Results =====
+                setting       auc  auc_ratio_vs_real
+0          Real -> Real  0.762695           1.000000
+1       TabDDPM -> Real  0.766267           1.004684
+2  TabDDPM+TAME -> Real  0.767839           1.006745

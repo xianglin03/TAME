@@ -1,0 +1,81 @@
+\subsection{Non-Label Downstream Task Performance}
+
+Beyond the standard label-prediction tasks, we further evaluate the utility of synthetic data under three challenging non-label scenarios: \textbf{feature prediction} (where the label column is removed and each remaining attribute serves as the prediction target), \textbf{MAR} (Missing At Random with missing rates of 10\%, 30\%, and 50\%), and \textbf{MNAR} (Missing Not At Random with the same missing rates). These scenarios test whether synthetic data retains sufficient statistical fidelity to support general-purpose machine learning workflows when the downstream task structure is unknown or when training data is incomplete.
+
+\subsubsection{Feature Task (Label-Free Prediction)}
+
+In the feature task setting, we remove the original label column and treat every remaining attribute as a potential prediction target. This evaluates the \emph{general-purpose utility} of synthetic data---i.e., whether it preserves enough inter-attribute correlation structure to support arbitrary downstream prediction tasks without knowing which column is the label.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.95\linewidth]{figures/nonlabel_task/feature_task_bar.pdf}
+    \caption{Feature task performance across four datasets. Left: classification tasks (Macro F1). Right: regression tasks ($R^2$).}
+    \label{fig:feature-task}
+\end{figure}
+
+Figure~\ref{fig:feature-task} compares the four methods (Real, TabDDPM, DP-TabDDPM, and TabDDPM+TAME) on feature prediction tasks. We observe the following:
+
+\begin{itemize}
+    \item \textbf{Classification (Macro F1):} TabDDPM+TAME achieves comparable or superior F1 scores compared to vanilla TabDDPM across all datasets. On \textit{Adult}, TabDDPM+TAME attains F1=0.436 versus TabDDPM's 0.437 (nearly identical). On \textit{Default}, TAME achieves F1=0.542, closely trailing TabDDPM (0.547) while outperforming DP-TabDDPM (0.442) by a large margin. Most notably, on \textit{Cardio}, TabDDPM+TAME (F1=0.556) \emph{exceeds} vanilla TabDDPM (0.551) and approaches the Real baseline (0.557), demonstrating that our memorization-aware training does not compromise categorical utility.
+
+    \item \textbf{Regression ($R^2$):} The advantage of TAME becomes even more pronounced on regression tasks. On \textit{Adult}, TabDDPM+TAME achieves $R^2$=0.252, outperforming TabDDPM ($R^2$=0.232). On \textit{Default}, TAME achieves $R^2$=0.544, significantly surpassing TabDDPM ($R^2$=0.473). The most striking improvement occurs on \textit{Cardio}, where TabDDPM produces severely negative $R^2$=-2.93, while TAME recovers to $R^2$=-0.98---a \textbf{66\% relative improvement} toward the Real baseline ($R^2$=-0.56). This indicates that TAME's cutmix-based augmentation better preserves the continuous-valued correlation structure that is critical for regression tasks.
+
+    \item \textbf{DP-TabDDPM baseline:} As expected, DP-TabDDPM (trained with DP-SGD) suffers catastrophic degradation in regression performance, with $R^2$ values plummeting to -5.22 on \textit{Shoppers} and -27.15 on \textit{Default}. This underscores the fundamental tension between strong differential privacy guarantees and downstream utility---a gap that TAME addresses \emph{without} requiring explicit privacy budgeting.
+\end{itemize}
+
+\subsubsection{Robustness Under Missing Data (MAR \& MNAR)}
+
+Real-world datasets frequently contain missing values. We evaluate synthetic data utility when the training data is subjected to MAR and MNAR missing mechanisms at 10\%, 30\%, and 50\% missing rates. Figures~\ref{fig:mar-task}--\ref{fig:mnar-task} present the results.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.98\linewidth]{figures/nonlabel_task/mar_task_line_f1.pdf}
+    \includegraphics[width=0.98\linewidth]{figures/nonlabel_task/mar_task_line_r2.pdf}
+    \caption{MAR task performance across missing rates. Top row: classification (Macro F1). Bottom row: regression ($R^2$).}
+    \label{fig:mar-task}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.98\linewidth]{figures/nonlabel_task/mnar_task_line_f1.pdf}
+    \includegraphics[width=0.98\linewidth]{figures/nonlabel_task/mnar_task_line_r2.pdf}
+    \caption{MNAR task performance across missing rates. Top row: classification (Macro F1). Bottom row: regression ($R^2$).}
+    \label{fig:mnar-task}
+\end{figure}
+
+\noindent\textbf{Classification (Macro F1).} Under both MAR and MNAR, TabDDPM+TAME consistently preserves classification utility across increasing missing rates:
+\begin{itemize}
+    \item On \textit{Default} under MAR-30\%, TabDDPM+TAME achieves F1=0.513, outperforming TabDDPM (0.484) by 0.029 and approaching the Real baseline (0.527).
+    \item On \textit{Cardio} under MAR-30\%, TAME achieves F1=0.524 versus TabDDPM's 0.516, again outperforming the baseline model.
+    \item Under MNAR-30\% on \textit{Default}, the gap widens further: TAME achieves F1=0.529 versus TabDDPM's 0.494 (a 0.035 absolute improvement).
+\end{itemize}
+
+\noindent\textbf{Regression ($R^2$).} The regression results reveal TAME's most compelling advantage under data scarcity:
+\begin{itemize}
+    \item On \textit{Default} under MAR-30\%, TabDDPM collapses to $R^2$=-0.026 (near random), while TAME maintains $R^2$=0.012---positive utility where TabDDPM fails.
+    \item On \textit{Default} under MNAR-30\%, TAME achieves $R^2$=0.465, dramatically outperforming TabDDPM ($R^2$=0.006) and recovering 81\% of the Real baseline ($R^2$=0.576).
+    \item On \textit{Cardio} under MAR-30\%, TAME achieves $R^2$=-0.428 compared to TabDDPM's $R^2$=-1.068, a \textbf{60\% relative improvement}.
+\end{itemize}
+
+\subsubsection{Overall Summary}
+
+Figure~\ref{fig:nonlabel-summary} provides a consolidated view of all three non-label scenarios at the 30\% missing rate (or full data for the feature task).
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.98\linewidth]{figures/nonlabel_task/nonlabel_task_summary.pdf}
+    \caption{Comprehensive non-label task comparison. Top row: classification (Macro F1) for Feature, MAR-30\%, and MNAR-30\%. Bottom row: regression ($R^2$) for the same scenarios.}
+    \label{fig:nonlabel-summary}
+\end{figure}
+
+\noindent\textbf{Key takeaways.} Across all non-label scenarios, TabDDPM+TAME demonstrates three principal advantages:
+
+\begin{enumerate}
+    \item \textbf{Consistent classification preservation:} TAME maintains Macro F1 scores that are consistently on par with or better than vanilla TabDDPM, with the gap widening on datasets with more complex categorical structures (e.g., \textit{Default} and \textit{Cardio}).
+
+    \item \textbf{Substantial regression improvement:} TAME delivers dramatic improvements in $R^2$ on regression tasks, particularly on \textit{Default} and \textit{Cardio}, where vanilla TabDDPM suffers from severe correlation distortion. This suggests that TAME's memorization-aware training better preserves the continuous-valued distributional structure.
+
+    \item \textbf{Robustness to missing data:} Under both MAR and MNAR mechanisms at 30\% and 50\% missing rates, TAME consistently outperforms TabDDPM. The improvement is most pronounced under MNAR, where the missingness depends on the observed values---a realistic scenario that TAME handles more gracefully due to its richer, CutMix-augmented training distribution.
+\end{enumerate}
+
+In summary, the non-label task experiments validate that TAME's memorization reduction strategy does not come at the cost of general-purpose utility. On the contrary, by mitigating overfitting to training set idiosyncrasies, TAME often produces synthetic data with \emph{superior} correlation preservation, enabling more accurate prediction across a broader range of downstream task configurations.

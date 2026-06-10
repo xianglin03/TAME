@@ -1,0 +1,56 @@
+mem_all: 0.2794448950166712, cat_ori: 0.12084347120843471, num_ori: 0.9964855366315221
+*********** Evaluation ***********
+
+1. MLE: 
+{
+    "best_f1_scores": {
+        "RandomForestClassifier": {
+            "binary_f1": 0.5136986301369864, 
+            "roc_auc": 0.8755867811605516, 
+            "weighted_f1": 0.5761804377673243, 
+            "accuracy": 0.8848337388483374
+        }
+    }, 
+    "best_weighted_scores": {
+        "RandomForestClassifier": {
+            "binary_f1": 0.53156146179402, 
+            "roc_auc": 0.872927400468384, 
+            "weighted_f1": 0.5914203488078069, 
+            "accuracy": 0.8856447688564477
+        }
+    }, 
+    "best_auroc_scores": {
+        "RandomForestClassifier": {
+            "binary_f1": 0.4857142857142857, 
+            "roc_auc": 0.8776294561540463, 
+            "weighted_f1": 0.5522669142051944, 
+            "accuracy": 0.8832116788321168
+        }
+    }, 
+    "best_acc_scores": {
+        "RandomForestClassifier": {
+            "binary_f1": 0.5284280936454849, 
+            "roc_auc": 0.8762190996617225, 
+            "weighted_f1": 0.5887609515722096, 
+            "accuracy": 0.8856447688564477
+        }
+    }, 
+    "best_avg_scores": {
+        "RandomForestClassifier": {
+            "binary_f1": 0.5306122448979592, 
+            "roc_auc": 0.8778220140515223, 
+            "weighted_f1": 0.5908481632762796, 
+            "accuracy": 0.8880778588807786
+        }
+    }
+}
+2. Density: 
+Shape: 0.8061387962712644, Trend: 0.7404455513287564
+3. DCR: 
+DCR Score, a value closer to 0.5 is better
+DCR Score = 0.9054699468324773
+4. Detection: 
+Detection Score = 0.20245906949027204
+5. Quality: 
+Alpha_Precision_all = 0.589720945600913
+Beta_Recall_all = 0.3005076447087801

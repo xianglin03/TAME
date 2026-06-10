@@ -1,0 +1,160 @@
+=== Baseline 评估 ===
+avg_attack_auc: 0.5980419533838682
+std_attack_auc: 0.01250470849488788
+avg_js: 0.018822934288622226
+std_js: 0.004273996323497551
+avg_mean_prob_gap: 0.043781594311346116
+std_mean_prob_gap: 0.008050492004058241
+avg_ks_pval: 7.637646931766773e-28
+exact_matches: 135
+repeats: 30
+
+=== TAME 评估 ===
+avg_attack_auc: 0.5319802253104229
+std_attack_auc: 0.0044975359185755745
+avg_js: 0.0068667284002212805
+std_js: 0.0009659485591596555
+avg_mean_prob_gap: 0.028685483374797264
+std_mean_prob_gap: 0.0037872565097945387
+avg_ks_pval: 1.7192255585624751e-06
+exact_matches: 121
+repeats: 30
+
+=== 对比（更敏感的指标） ===
+Exact matches: baseline 135  vs ours 121
+Avg attack AUC: baseline 0.5980  vs ours 0.5320
+Avg JS on probs: baseline 0.018823  vs ours 0.006867
+Avg prob gap: baseline 0.043782  vs ours 0.028685
+
+
+=== DP 评估 ===
+
+--- DP epsilon=1 ---
+avg_attack_auc: 0.5010901246672227
+std_attack_auc: 0.00504763234130014
+avg_js: 0.0003587021320007606
+std_js: 0.00019230986845357795
+avg_mean_score_gap: 0.0002236278053244815
+std_mean_score_gap: 0.00017191821644607592
+avg_ks_pval: 0.7503251564553779
+exact_matches: 100
+repeats: 30
+
+--- DP epsilon=4 ---
+avg_attack_auc: 0.506225771608768
+std_attack_auc: 0.0044216614341629394
+avg_js: 0.0034013400761544626
+std_js: 0.000688460080837017
+avg_mean_score_gap: 0.005807105453112808
+std_mean_score_gap: 0.0011960566802342754
+avg_ks_pval: 0.31973639929842934
+exact_matches: 121
+repeats: 30
+
+--- DP epsilon=8 ---
+avg_attack_auc: 0.5263824273349112
+std_attack_auc: 0.004899814573948679
+avg_js: 0.004857722014234114
+std_js: 0.0007911940233586444
+avg_mean_score_gap: 0.014593196817849168
+std_mean_score_gap: 0.002385404093170989
+avg_ks_pval: 0.011549815928500793
+exact_matches: 124
+repeats: 30
+
+--- DP epsilon=16 ---
+avg_attack_auc: 0.5527967394459853
+std_attack_auc: 0.004582899651303064
+avg_js: 0.01470292540679965
+std_js: 0.0008622509209643697
+avg_mean_score_gap: 0.02932033297303017
+std_mean_score_gap: 0.003197068827077678
+avg_ks_pval: 1.765648168534857e-06
+exact_matches: 152
+repeats: 30
+
+
+=== DP-SGD 评估 ===
+
+--- DP-SGD dp_mode_num=1 ---
+avg_attack_auc: 0.5013240394754491
+std_attack_auc: 0.004202396493481235
+avg_js: 0.008558093237737695
+std_js: 0.0002954323132415379
+avg_mean_score_gap: 0.0007596268445876057
+std_mean_score_gap: 0.0004624380223448211
+avg_ks_pval: 0.9086185087076541
+exact_matches: 10
+repeats: 30
+
+--- DP-SGD dp_mode_num=4 ---
+avg_attack_auc: 0.520195682419314
+std_attack_auc: 0.005395852907109019
+avg_js: 0.002288435456301115
+std_js: 0.00016989662070302918
+avg_mean_score_gap: 0.0002178069593320675
+std_mean_score_gap: 0.00023912886289095413
+avg_ks_pval: 0.6357376842266584
+exact_matches: 102
+repeats: 30
+
+--- DP-SGD dp_mode_num=8 ---
+avg_attack_auc: 0.5502848478363806
+std_attack_auc: 0.0088937931592213327
+avg_js: 0.0010984263249110007
+std_js: 5.906145448005825e-05
+avg_mean_score_gap: 0.00018898574361528864
+std_mean_score_gap: 0.00014011986920001548
+avg_ks_pval: 0.9550502707429066
+exact_matches: 110
+repeats: 30
+
+--- DP-SGD dp_mode_num=16 ---
+avg_attack_auc: 0.5693530025848669
+std_attack_auc: 0.0030490768444004007
+avg_js: 0.0108695705839652
+std_js: 0.0002431438137479633
+avg_mean_score_gap: 0.0006518033580711865
+std_mean_score_gap: 0.0004635055826123532
+avg_ks_pval: 0.9829455105904761
+exact_matches: 130
+repeats: 30
+
+
+总结：
+
+=== Baseline 评估 ===
+
+| 指标            | 数值       |
+|-----------------|------------|
+| Exact matches   | 135       |
+| Avg attack AUC  | 0.5980    |
+| Avg JS on probs | 0.0188   |
+
+
+=== TAME 详细 ===
+
+| 指标            | 数值       |
+|-----------------|------------|
+| Exact matches   | 121        |
+| Avg attack AUC  | 0.5320     |
+| Avg JS on probs | 0.006867   |
+
+=== DP 各参数详细 ===
+
+| epsilon | Exact matches | Avg attack AUC | Avg JS on probs |
+|---------|---------------|----------------|-----------------|
+| 1       | 100           | 0.5011         | 0.000359        |
+| 4       | 121           | 0.5062         | 0.003401        |
+| 8       | 124           | 0.5264         | 0.004858        |
+| 16      | 152           | 0.5528         | 0.014703        |
+
+=== DP-SGD 各参数详细 ===
+
+| dp_mode_num | Exact matches | Avg attack AUC | Avg JS on probs |
+|-------------|---------------|----------------|-----------------|
+| 1           | 10            | 0.5013         | 0.008558        |
+| 4           | 102           | 0.5202         | 0.002288        |
+| 8           | 110           | 0.5503         | 0.008098        |
+| 16          | 130           | 0.5694         | 0.010870        |
+

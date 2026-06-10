@@ -1,0 +1,86 @@
+============================================================
+[PROFILE] Gcat——load model (1000 step 1次)
+               wall_time_sec: 0.1315
+                cpu_time_sec: 0.1250
+        avg_cpu_util_percent: 95.0871
+            rss_mem_start_mb: 1412.7109
+              rss_mem_end_mb: 1415.3945
+            rss_mem_delta_mb: 2.6836
+        peak_python_alloc_mb: 6.5888
+       peak_gpu_mem_alloc_mb: 556.7651
+============================================================
+
+============================================================
+[PROFILE] Gcat -- calc
+               wall_time_sec: 0.0031
+                cpu_time_sec: 0.0156
+        avg_cpu_util_percent: 497.8334
+            rss_mem_start_mb: 1415.3945
+              rss_mem_end_mb: 1415.3984
+            rss_mem_delta_mb: 0.0039
+        peak_python_alloc_mb: 0.0052
+       peak_gpu_mem_alloc_mb: 599.7358
+============================================================
+
+============================================================
+[PROFILE] dp -- calc
+               wall_time_sec: 0.0037
+                cpu_time_sec: 0.0156
+        avg_cpu_util_percent: 417.1227
+            rss_mem_start_mb: 1412.8320
+              rss_mem_end_mb: 1412.8320
+            rss_mem_delta_mb: 0.0001
+        peak_python_alloc_mb: 0.0032
+       peak_gpu_mem_alloc_mb: 1033.9370
+============================================================
+
+============================================================
+[PROFILE] calc_mem (optional step)
+               wall_time_sec: 53.2132
+                cpu_time_sec: 53.1875
+        avg_cpu_util_percent: 99.9517
+            rss_mem_start_mb: 366.3633
+              rss_mem_end_mb: 366.4023
+            rss_mem_delta_mb: 0.0391
+        peak_python_alloc_mb: 8.3376
+       peak_gpu_mem_alloc_mb: 1028.7632
+============================================================
+
+总结：
+============================================================
+[PROFILE] tame -- calc
+               wall_time_sec: 0.0031
+                cpu_time_sec: 0.0156
+        avg_cpu_util_percent: 497.8334
+            rss_mem_start_mb: 1415.3945
+              rss_mem_end_mb: 1415.3984
+            rss_mem_delta_mb: 0.0039
+        peak_python_alloc_mb: 0.0052
+       peak_gpu_mem_alloc_mb: 599.7358
+============================================================
+
+============================================================
+[PROFILE] dp -- calc
+               wall_time_sec: 0.0037
+                cpu_time_sec: 0.0156
+        avg_cpu_util_percent: 417.1227
+            rss_mem_start_mb: 1412.8320
+              rss_mem_end_mb: 1412.8320
+            rss_mem_delta_mb: 0.0001
+        peak_python_alloc_mb: 0.0032
+       peak_gpu_mem_alloc_mb: 1033.9370
+============================================================
+
+
+============================================================
+[PROFILE] dp-sgd -- calc
+               wall_time_sec: 1.7819
+                cpu_time_sec: 1.8700
+        avg_cpu_util_percent: 104.9444
+            rss_mem_start_mb: 1793.1133
+              rss_mem_end_mb: 1793.9922
+            rss_mem_delta_mb: 0.8789
+        peak_python_alloc_mb: 0.0430
+       peak_gpu_mem_alloc_mb: 5552.3164
+============================================================
+

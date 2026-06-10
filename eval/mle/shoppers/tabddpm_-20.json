@@ -1,0 +1,42 @@
+{
+    "best_f1_scores": {
+        "RandomForestClassifier": {
+            "binary_f1": 0.1218274111675127, 
+            "roc_auc": 0.7792779078844652, 
+            "weighted_f1": 0.24084828796749613, 
+            "accuracy": 0.8596918085969181
+        }
+    }, 
+    "best_weighted_scores": {
+        "RandomForestClassifier": {
+            "binary_f1": 0.1134020618556701, 
+            "roc_auc": 0.7733177205308353, 
+            "weighted_f1": 0.23375368346230094, 
+            "accuracy": 0.8605028386050284
+        }
+    }, 
+    "best_auroc_scores": {
+        "RandomForestClassifier": {
+            "binary_f1": 0.1691542288557214, 
+            "roc_auc": 0.7632253447827217, 
+            "weighted_f1": 0.28152410792110255, 
+            "accuracy": 0.8645579886455799
+        }
+    }, 
+    "best_acc_scores": {
+        "RandomForestClassifier": {
+            "binary_f1": 0.14925373134328357, 
+            "roc_auc": 0.7550455373406193, 
+            "weighted_f1": 0.26431510451801515, 
+            "accuracy": 0.8613138686131386
+        }
+    }, 
+    "best_avg_scores": {
+        "RandomForestClassifier": {
+            "binary_f1": 0.1319796954314721, 
+            "roc_auc": 0.7561072079104866, 
+            "weighted_f1": 0.24962460833781414, 
+            "accuracy": 0.8613138686131386
+        }
+    }
+}

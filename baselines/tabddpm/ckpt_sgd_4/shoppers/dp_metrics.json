@@ -1,0 +1,20 @@
+{
+  "dp_mode_num": 4,
+  "base_noise_multiplier": 1.0,
+  "noise_multiplier": 2.0,
+  "max_grad_norm": 1.0,
+  "delta": 1e-05,
+  "num_train_examples": 11097,
+  "logical_batch_size": 4096,
+  "physical_batch_size": 1024,
+  "steps_per_epoch": 3,
+  "target_epochs": 800,
+  "resolved_updates": 2400,
+  "completed_updates": 2400,
+  "best_step": 2400,
+  "best_smooth_loss": 2.222147106423005,
+  "best_epsilon": 71.58890794148957,
+  "final_epsilon": 71.58890794148957,
+  "stop_reason": "max_updates",
+  "grad_sample_mode": "hooks"
+}

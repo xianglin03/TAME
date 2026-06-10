@@ -1,0 +1,28 @@
+=== Baseline 评估 ===
+avg_attack_auc: 0.5474752710613802
+std_attack_auc: 0.008828755089011708
+avg_js: 0.0049651753467291485
+std_js: 0.001680499501420396
+avg_mean_prob_gap: 0.01173088105032737
+std_mean_prob_gap: 0.0030601061050467573
+avg_ks_pval: 3.663074165101367e-18
+exact_matches: 0
+repeats: 30
+
+=== Our method 评估 ===
+avg_attack_auc: 0.5291381617054899
+std_attack_auc: 0.006188935929192752
+avg_js: 0.0021640328146878027
+std_js: 0.0006421377824435983
+avg_mean_prob_gap: 0.011569374169181119
+std_mean_prob_gap: 0.00264194894672486
+avg_ks_pval: 2.824309164195438e-07
+exact_matches: 0
+repeats: 30
+
+=== 对比（更敏感的指标） ===
+Exact matches: baseline 0  vs ours 0
+Avg attack AUC: baseline 0.5475  vs ours 0.5291
+Avg JS on probs: baseline 0.004965  vs ours 0.002164
+Avg prob gap: baseline 0.011731  vs ours 0.011569
+Avg KS p-value: baseline 0.0000  vs ours 0.0000

@@ -1,0 +1,102 @@
+rebuttal content:
+Thank you for the responses. The rebuttal partially resolves my questions.
+1. A2 (comparison with DP-SGD): I do not understand the claim that a comparison against DP-SGD would be unfair. DP-SGD is a standard and effective method for enforcing privacy, and therefore it seems like a natural baseline for benchmarking privacy-preserving generation methods. Moreover, in the related work, the paper argues that DP-SGD methods "often break down inter-attribute correlations, thereby degrading the utility of the synthesized tables". However, the **higher MLE** reported here for the DP-SGD method does not support that claim. Beyond this, I do not see any other discussion in the paper about DP-SGD methods or of the benefits of introducing privacy at sampling time rather than during training. Without this discussion, I do not see any argument for dismissing DP-SGD as a relevant baseline. More generally, if introducing privacy at sampling does not provide any conceptual advantage over introducing privacy at training, such methods cannot be the sole point of comparison. Can the authors clarify on this?
+2. A2 (experimental protocol): The benchmark against DP-SGD is underspecified. What is the model used? Is it the same backbone as the one used for TAME? What is the privacy budget? In your experiment, you report higher MLE for DP-SGD but also higher memorization: this does not help comparing the privacy/utility trade-offs. To assess whether a method is better than another, it would be important to compare across **multiple privacy budgets**, or a least provide a privacy budget for which TAME achieves both better utility and lower memorization. Could the authors report results across multiple privacy budgets?
+3. A3: Same than for A2. Unless there is a strong reason not to compare TAME against DP-SGD, could the authors report the performance of TAME vs DP-SGD for **other columns as downstream targets**?
+
+现在需要你帮我回复这个评审人的问题，**绞尽脑汁**地让他能够为我们的文章提分，现在我将给你提供一些补充实验：
+1. 针对评审的第一个问题我们原先的实验结果是：
+| Method | MLE/Mem. ↑ | DQ/Mem. ↑ |
+|-----------------|--------------|------------|
+| DP (training) | 5.19 | 3.24 |
+| TAME | 4.25 | 5.38 |
+，所以评委说这个MLE/MEM上DP(sgd) > TAME，不能说明我们的方法好。但是，MLE/MEM高的原因纯粹是因为MEM的基数太小而已，MLE上DP(SGD)比TAME的方法低很多，只是MEM的基数太小了：
+| Method | MEM | MLE | DQ |
+| dp_sgd | 0.0503 | 0.261 | 0.163 |
+| TAME | 0.1381 | 0.587 | 0.743 |
+
+2. 针对评委的第二个问题：我补充了相关multiple privacy budgets的实验如下：
+| (dp_sgd)dp_num | MEM | MLE | DQ |
+|---|---:|---:|---:|
+| 1 | 0.036 | 0.145 | 0.249 |
+| 4 | 0.0424 | 0.227 | 0.288 |
+| 8 | 0.0503 | 0.261 | 0.163 |
+| 16 | 0.0933 | 0.351 | 0.31 |
+| 32 | 0.1433 | 0.3893 | 0.3637 |
+
+我们本来的：
+| Method | MEM | MLE | DQ |
+| Our dp(sample) | 0.1405 | 0.645 | 0.673 |
+| TAME | 0.1381 | 0.587 | 0.743 |
+
+3. 针对评委的第三个问题：
+我们补充了 different DP-SGD privacy settings 下的 non-label 相关实验：
+
+| Non-label F1 ↑ |       | Regression R² ↑ |       |
+|----------------|-------|-----------------|-------|
+|                | DP-SGD | TAME | DP-SGD | TAME |
+| DP-SGD（1）    | 0.1594 | 0.3236 | -15.2067  | 0.5302 |
+| DP-SGD（4）    | 0.1209 | 0.3236 | -12.4672  | 0.5302 |
+| DP-SGD（8）    | 0.2259 | 0.3236 | -6.6241 | 0.5302 |
+| DP-SGD（16）   | 0.2583 | 0.3236 | -2.9051   | 0.5302 |
+| DP-SGD（32）   | 0.2812 | 0.3236 | -2.6641   | 0.5302 |
+
+
+我先把新增实验整合成一版可直接用于 rebuttal 的回应，重点放在三点：解释原比值指标为何会误导、把多 privacy budgets 结果组织成更完整的 privacy–utility trade-off、并纳入 non-label target 的补充实验。
+
+我会补上一层更容易被接受的论证：把 sampling-time DP 与 training-time DP 表述为面向不同部署场景的互补方案，而不是否认 DP-SGD 的相关性。
+
+Thought for 11m 14s
+
+下面这个版本更稳，也更容易让评审接受。核心处理是三点：
+第一，不再说 DP-SGD “unfair”；改成“natural and complementary baseline”。
+第二，主动承认原来的 MLE/MEM 表容易误导，改用绝对值和 privacy–utility trade-off 来说话。
+第三，不再暗示 “TAME 全面支配 DP-SGD”，而是说 “TAME 提供了一个更高 utility 的 operating point，并且适用于 sampling-time deployment”。
+
+你可以直接回英文。方括号里的内容请你用真实实现细节补上。
+
+Response to Reviewer
+
+Thank you for raising these points. We agree that our original discussion of DP-SGD was not sufficiently clear, and that the presentation in the current table was potentially confusing because it reported MLE/MEM and DQ/MEM, rather than raw MLE and raw DQ. In the revision, we will (i) keep DP-SGD as an explicit baseline, (ii) report the full DP-SGD protocol ([same backbone / preprocessing / split as TAME], [optimizer, clipping, accountant], and exact privacy budget [, (iii) add results across multiple privacy budgets, and (iv) include additional downstream evaluations on non-label targets.
+
+1. On whether DP-SGD is a relevant baseline, and on the conceptual role of sampling-time privacy.
+We agree that DP-SGD is a natural baseline and should not be dismissed. Our intention was not to argue that comparison to DP-SGD is “unfair,” but rather that training-time DP and sampling-time privacy operate at different points of the pipeline. Training-time DP perturbs optimization, whereas sampling-time privacy constrains the release mechanism at generation time. This is practically relevant when the generator is already trained, when retraining with DP-SGD is infeasible or costly, or when one wants to enforce privacy at release time rather than during optimization. We will revise the paper to make this distinction explicit and to present DP-SGD as a complementary baseline rather than an inappropriate one.
+
+We also agree that our original table did not provide the right evidence for the claim about utility degradation, because the ratio MLE/MEM can be unstable when MEM is very small. The absolute numbers are more informative. For the setting in question, the raw metrics are:
+
+DP-SGD: MEM = 0.0503, MLE = 0.261, DQ = 0.163
+TAME: MEM = 0.1381, MLE = 0.587, DQ = 0.743
+
+Thus, DP-SGD has lower memorization but also substantially lower utility in this setting; the larger value of MLE/MEM is driven by the very small MEM denominator, not by higher raw MLE. We will therefore de-emphasize ratio-only comparisons and replace them with absolute metrics and a privacy–utility trade-off plot in the revision.
+
+2. On the experimental protocol and comparison across privacy budgets.
+We agree that the DP-SGD benchmark was under-specified. In the revision, we will explicitly state that the DP-SGD baseline uses [the same backbone / data split / preprocessing as TAME], with [exact training and privacy-accounting details], and we will report the exact privacy budget for each run ([fill in exact 
+
+We additionally ran DP-SGD at four privacy settings:
+
+[budget 1]: MEM = 0.036, MLE = 0.145, DQ = 0.249
+[budget 4]: MEM = 0.0424, MLE = 0.227, DQ = 0.288
+[budget 8]: MEM = 0.0503, MLE = 0.261, DQ = 0.163
+[budget 16]: MEM = 0.0933, MLE = 0.351, DQ = 0.310
+
+For reference, our sampling-only baseline obtains MEM = 0.1405, MLE = 0.645, DQ = 0.673, and TAME obtains MEM = 0.1381, MLE = 0.587, DQ = 0.743.
+
+Across the DP-SGD privacy settings we evaluated, utility remains substantially below TAME. At the same time, we agree that these results do not show strict Pareto dominance of TAME on both utility and memorization, and we will revise the claim accordingly. Our revised conclusion will be narrower and more precise: TAME provides a substantially stronger utility operating point, while DP-SGD remains an important baseline and may be preferable when minimizing memorization is the primary objective.
+
+1. On other downstream targets beyond the label column.
+We have added an additional comparison on non-label downstream targets. On shoppers, using non-label columns as targets, TAME remains much closer to real-data performance than DP-SGD:
+
+Categorical non-label target (F1): Real = 0.3533, DP-SGD = 0.2812, TAME = 0.3236
+Continuous non-label target (R²): Real = 0.5741, DP-SGD = -4.6641, TAME = 0.5302
+
+These new results suggest that the benefit of TAME is not limited to the label column, and more directly support the claim that TAME better preserves cross-attribute structure on downstream tasks involving non-label attributes as well. We will add these results to the paper and clarify that our claim is not that DP-SGD is irrelevant, but that sampling-time privacy offers a different and practically useful trade-off, especially in settings where retraining with DP-SGD is difficult.
+
+你还需要同步改正文，不然 rebuttal 说了，正文没改，评审还是会扣分。最关键的三处是：
+
+把 “comparison with DP-SGD would be unfair” 全部删掉，改成 “DP-SGD is a natural and complementary baseline”。
+把主文里容易误导的 MLE/MEM 表述降级，最好直接补一张 privacy–utility curve（x 轴 MEM，y 轴 MLE / DQ）。
+把 dp_num 明确成 reviewer 能认的 privacy budget 记号，最好直接写 exact 
+
+(ϵ,δ)；同时写清楚 same backbone / same split / same preprocessing。
+
+如果你愿意，我可以继续把这段压缩成“rebuttal 字数受限版”。

@@ -1,0 +1,63 @@
+Shoppers_sample_reject
+[Round 1] generated=4096, accepted=3660, discarded=436, rule_rejected=436, kept_total=3660/11097, accept_rate=89.36%, mem_weight=0.1486, time=8832.35s
+[Round 2] generated=4096, accepted=3666, discarded=430, rule_rejected=430, kept_total=7326/11097, accept_rate=89.50%, mem_weight=0.1472, time=8593.03s
+[Round 3] generated=4096, accepted=3616, discarded=480, rule_rejected=480, kept_total=10942/11097, accept_rate=88.28%, mem_weight=0.1589, time=8552.26s
+[Round 4] generated=512, accepted=155, discarded=357, rule_rejected=44, kept_total=11097/11097, accept_rate=30.27%, mem_weight=0.1287, time=8583.26s
+
+Final stats: generated=12800, accepted=11097, discarded=1703, overall_accept_rate=86.70%, cat_mem=0.0000, num_mem=0.9492, mem_weight=0.0475, total_time=34560.96s
+
+mem_all: 0.047458772641254435, cat_ori: 0.0, num_ori: 0.9491754528250879
+*********** Evaluation ***********
+
+1. MLE: 
+{
+    "best_f1_scores": {
+        "RandomForestClassifier": {
+            "binary_f1": 0.6025641025641025, 
+            "roc_auc": 0.911527452511059, 
+            "weighted_f1": 0.653006884631633, 
+            "accuracy": 0.8994322789943228
+        }
+    }, 
+    "best_weighted_scores": {
+        "RandomForestClassifier": {
+            "binary_f1": 0.5830508474576271, 
+            "roc_auc": 0.9100598490762426, 
+            "weighted_f1": 0.6365250256821315, 
+            "accuracy": 0.9002433090024331
+        }
+    }, 
+    "best_auroc_scores": {
+        "RandomForestClassifier": {
+            "binary_f1": 0.5894039735099338, 
+            "roc_auc": 0.9072235232890971, 
+            "weighted_f1": 0.6418394447702325, 
+            "accuracy": 0.8994322789943228
+        }
+    }, 
+    "best_acc_scores": {
+        "RandomForestClassifier": {
+            "binary_f1": 0.6, 
+            "roc_auc": 0.9054592766068175, 
+            "weighted_f1": 0.6508312681409657, 
+            "accuracy": 0.8994322789943228
+        }
+    }, 
+    "best_avg_scores": {
+        "RandomForestClassifier": {
+            "binary_f1": 0.5562913907284768, 
+            "roc_auc": 0.9025500910746813, 
+            "weighted_f1": 0.6129555290258963, 
+            "accuracy": 0.8913219789132197
+        }
+    }
+}
+2. Density: 
+Shape: 0.9233526578755019, Trend: 0.9070831081224944
+3. DCR: 
+DCR Score, a value closer to 0.5 is better
+DCR Score = 0.9079931513021537
+4. Detection: 
+Detection Score = 0.5684436996542788
+5. Quality: 
+alpha precision: 0.947673, beta recall: 0.406909

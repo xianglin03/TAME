@@ -1,0 +1,73 @@
+\begin{table*}[!t]
+\centering
+% \small
+\caption{Performance evaluation of \SystemName\ and baselines on four mixed-type datasets: MLE/Mem, DQ/Mem, Mem. ratio (\%), MLE (\%), and data quality (DQ) (\%). Note: MLE/Mem uses the average of F1 (\%), WE (\%), AUR (\%), ACC (\%), and AVG (\%) divided by Mem. ratio (\%); DQ/Mem uses the average of $\alpha$-precision (\%), $\beta$-recall (\%), shape (\%), and trend (\%) divided by Mem. ratio (\%). \colorbox{lightgreen}{Blue} and \colorbox{lightblue}{light blue} highlight the highest and second-highest MLE/Mem and DQ/Mem values, respectively.}
+\vspace{-0.5em}
+\setlength{\tabcolsep}{2pt}
+\label{tab:overallperformance}
+\resizebox{\linewidth}{!}{
+\begin{tabular}{l l|c c| c | c c c c c | c c c c}
+\toprule[1.5pt]
+ &  &MLE/Mem.$\uparrow$ & DQ/Mem.$\uparrow$ & Mem.(\%)$\downarrow$  & F1 (\%)$\uparrow$  & WE (\%)$\uparrow$  & AUR (\%)$\uparrow$  &ACC(\%)$\uparrow$  & AVG (\%)$\uparrow$   & $\alpha$-Pre.(\%)$\uparrow$  & $\beta$-Re.(\%)$\uparrow$  & Shape(\%)$\uparrow$  & Trend(\%)$\uparrow$ \\
+\midrule
+\multirow{12}{*}{\rotatebox{90}{\textbf{{Shoppers}}}}
+                       & \text{TabSyn} & 3.81 & 5.24 & 16.43 & 63.25 & 60.45 & 63.49 & 61.63 & 63.87 & 99.44 & 48.86 & 98.31 & 97.78\\
+                       & \text{TabSyn+RN}& 2.82 & \colorbox {lightgreen}{6.58} & 6.13 & 17.82& 17.82 & 16.92 & 16.92 & 16.83 & 30.72 & 0.34 & 70.13 & 60.18\\
+                       & \text{TabSyn+PP}& 3.09 & 4.37 & 16.66 & 50.93 & 48.86 & 48.39 & 51.33 & 58.19 & 77.27 & 38.03 & 88.22 & 87.44\\
+                       & \text{TabSyn+DP-T}& \colorbox {lightgreen}{6.73} & 5.35 & 7.43 & 14.65 & 13.65 & 86.46 & 85.16 & 49.98 & 12.46 & 2.41 & 75.18 & 68.76\\
+                       & \text{TabSyn+DP-S}& 0.85 & 5.23 & 6.08& 5.00& 4.06& 6.03& 5.00 & 5.61 & 3.45 & 0.58 &63.61 & 59.54\\
+                        & \underline{\text{TabSyn+\SystemName}}& 3.80 & 5.30 & 15.02 & 57.82 & 55.03 & 58.17 & 57.53 & 57.04 & 82.05 & 51.98 & 93.44 & 90.88\\
+                        & \text{TabDDPM} & 3.92 & 5.15 & 16.31 & 64.74 & 64.37 & 64.95 & 64.11 & 62.14 & 91.59 & 54.93 & 97.15 & 92.83\\
+                        & \text{TabDDPM+RN}& 1.13 & 2.75 & 20.09 & 23.00 & 22.98 & 23.46 & 21.74 & 22.42 & 44.15 & 14.43 & 87.51 & 74.48\\
+                        & \text{TabDDPM+PP}& 1.59 & 4.00 & 15.99 & 30.57 & 32.46 & 2.16 & 33.48 & 28.83 & 73.30 & 36.42 & 84.02 & 80.43\\
+                        & \text{TabDDPM+DP-T}& 2.72 & 2.54 & 14.33 & 41.28 & 40.48 & 34.60 & 42.06 & 36.21 & 14.42 & 0.42 & 67.10 & 63.51\\
+                        & \text{TabDDPM+DP-S}& \colorbox {lightblue}{4.59} & 4.79 & 14.05 &64.72&64.18 & 66.10 &63.06&64.55& 78.40 & 17.85 & 87.33 & 85.61\\
+                        & \underline{\text{TabDDPM+\SystemName}}& 4.25 & \colorbox {lightblue}{5.38} & 13.81 & 55.33 & 57.93 & 57.98 & 59.66 & 62.26 & 86.32 & 33.65 & 89.56 & 87.59\\
+                        \midrule
+\multirow{12}{*}{\rotatebox{90}{\textbf{{Adult}}}}
+                       & \text{TabSyn} & 5.01 & 6.79 & 12.22 & 60.35 & 61.66 & 60.66 & 61.24 & 62.04 & 97.70 & 41.38 & 97.70 & 95.32\\
+                        & \text{TabSyn+RN}& 1.81 & \colorbox {lightblue}{7.20} & 8.61  & 16.15 & 17.11 & 12.47 & 13.98 & 18.11 & 89.87 & 4.08 & 80.54 & 73.36\\
+                        & \text{TabSyn+PP}& 4.28 & 5.64 & 12.45 & 51.04 & 51.08 & 51.48 & 51.62 & 60.87 & 86.19 & 30.67 & 77.76 & 86.11\\
+                        & \text{TabSyn+DP-T}& \colorbox {lightgreen}{8.11} & 6.35 & 5.27 & 13.15 & 22.77 & 59.45 & 75.84 & 42.80 & 9.45 & 0.78 & 68.69 & 54.97\\
+                        & \text{TabSyn+DP-S}& 3.47 & 5.67 & 4.97 &23.25&16.88&16.13&10.61&19.36 &5.22 & 0.31&61.01& 46.21\\
+                        & \underline{\text{TabSyn+\SystemName}}& 5.51 & 6.51 & 10.77   & 60.51 & 60.21 & 58.57 & 56.46 & 60.77 & 74.11 & 37.57 & 87.54 & 81.11\\
+                        & \text{TabDDPM} & 5.33 & 6.85 & 12.32 & 65.88 & 65.92 & 64.75 & 65.99 & 66.28 & 95.22 & 45.70 & 98.90 & 97.92\\
+                        & \text{TabDDPM+RN}&  2.16 & 3.91 & 16.29   & 24.94 & 34.87 & 34.95 & 46.67 & 34.83 & 61.60 & 20.98 & 90.77 & 81.53\\
+                        & \text{TabDDPM+PP}& 4.39 & 5.00 & 11.58 & 53.63 & 53.49 & 45.43 & 47.86 & 54.01 & 93.60 & 27.52 & 79.61 & 70.37\\
+                        & \text{TabDDPM+DP-T}& 3.95 & 6.57 & 11.53 & 44.64 & 46.31 & 45.44 & 44.19 & 47.18 & 85.60 & 36.78 & 90.37 & 90.36\\
+                        & \text{TabDDPM+DP-S}&  3.71 & 4.49 &13.52 &50.06&49.73&50.72&50.66&49.87 &72.10 &8.05&86.40& 76.34\\
+                        & \underline{\text{TabDDPM+\SystemName}}&  \colorbox {lightblue}{5.84} & \colorbox {lightgreen}{7.41} & 11.27 & 66.21 & 66.06 & 65.91 & 64.85 & 66.16 & 93.41 & 46.46 & 97.64 & 96.32\\
+                        \midrule
+\multirow{12}{*}{\rotatebox{90}{\textbf{{Default}}}}
+                       & \text{TabSyn}&  3.75 & 7.48 & 10.66 & 40.33 & 39.37 & 40.30 & 38.68 & 41.21 & 92.13 & 38.22 & 94.75 & 93.90\\
+                       & \text{TabSyn+RN}&  3.23 & 6.24 & 7.37  & 26.68 & 27.55 & 22.19 & 18.51 & 24.17 & 50.76 & 0.97 & 65.44 & 66.89\\
+                       & \text{TabSyn+PP}&  3.45 & 8.39 & 8.85 & 30.82 & 30.90 & 28.20 & 33.10 & 29.71 & 83.06 & 38.26 & 90.87 & 84.57\\
+                       & \text{TabSyn+DP-T}& \colorbox {lightblue}{6.87} & 6.71 & 5.23 & 37.17 & 29.09 & 53.99 & 23.37 & 35.90 & 9.09 & 0.42 & 69.00 & 61.82\\
+                       & \text{TabSyn+DP-S}&  \colorbox {lightgreen}{7.27} & 6.05 & 5.11 & 37.17& 37.11&37.18 &37.13& 37.09& 3.82 & 0.15 &63.40& 56.36\\
+                        & \underline{\text{TabSyn+\SystemName}}&  3.90 & \colorbox {lightgreen}{9.18} & 8.43  & 36.24 & 34.56 & 27.06 & 33.59 & 32.99 & 91.18 & 42.63 & 92.64 & 83.24\\
+                        & \text{TabDDPM}&  4.43 & 7.81 & 10.32 & 46.14 & 45.14 & 45.60 & 45.28 & 46.77 & 95.63 & 39.14 & 97.06 & 90.81\\
+                        & \text{TabDDPM+RN}&  2.02 & 3.36 & 17.50  & 39.40 & 38.17 & 28.54 & 35.78 & 34.85 & 34.62 & 16.61 & 95.94 & 87.80\\
+                        & \text{TabDDPM+PP}&  3.62 & 6.03 & 12.08 & 43.54 & 42.50 & 44.42 & 42.93 & 45.12 & 69.50 & 34.85 & 80.20 & 77.95\\
+                        & \text{TabDDPM+DP-T}& 3.13 & 6.37 & 10.41 & 38.53 & 37.54 & 26.54 & 29.77 & 30.52 & 67.45 & 37.62 & 80.65 & 79.43\\
+                        & \text{TabDDPM+DP-S}&  2.48 & 3.59 & 13.63& 35.79&34.81&31.44& 33.37&33.52& 39.09 & 2.29& 79.09& 75.32\\
+                        & \underline{\text{TabDDPM+\SystemName}}&  4.91 & \colorbox {lightblue}{8.86} &9.13  & 43.97 & 45.19 & 44.87 & 44.61 & 45.63 & 95.02 & 42.73 & 96.31 & 89.48\\
+\midrule
+\multirow{12}{*}{\rotatebox{90}{\textbf{{Cardio}}}}
+                       & \text{TabSyn}&  14.23 & \colorbox {lightblue}{17.33} & 5.02 & 71.88 & 71.47 & 71.51 & 70.73 & 71.69 & 99.87 & 49.46 & 99.71 & 99.00\\
+                       & \text{TabSyn+RN}&  11.66 & 8.89 & 5.10 & 58.60 & 60.21 & 59.65 & 60.22 & 58.78 & 45.58 & 1.99 & 75.35 & 58.32\\
+                       & \text{TabSyn+PP}&  13.75 & 14.56 & 5.17 & 71.24 & 71.18 & 70.80 & 70.87 & 71.10 & 90.48 & 40.52 & 90.70 & 79.23\\
+                       & \text{TabSyn+DP-T}& 10.06 & 10.92 & 5.01 & 65.73 & 33.55 & 53.45 & 48.96 & 50.42 & 73.97 & 7.53 & 71.28 & 66.29\\
+                       & \text{TabSyn+DP-S}&  13.12 & 10.94 &5.01 & 65.73& 65.73& 65.73 & 65.73 & 65.73 & 74.12 & 7.50 & 71.32 & 66.38\\
+                        & \underline{\text{TabSyn+\SystemName}}&  \colorbox {lightgreen}{14.57} & 14.58 & 4.95  & 72.18 & 72.16 & 72.34 & 71.85 & 72.00 & 79.20 & 43.79 & 91.34 & 74.31\\
+                        & \text{TabDDPM}&  14.10 & \colorbox {lightgreen}{19.76} & 5.03 & 70.81 & 70.93 & 71.01 & 71.08 & 70.92 & 99.53 & 49.27 & 99.62 & 99.20\\
+                         & \text{TabDDPM+RN}&  11.60 & 12.37 & 5.04 & 60.52 & 59.98 & 60.73 & 50.07 & 61.00 &76.56 & 6.81 & 83.86 & 82.24\\
+                         & \text{TabDDPM+PP}&  13.68 & 14.75 & 5.14 & 70.29 & 70.39 & 70.40 & 70.19 & 70.44 & 69.06 & 45.81 & 92.18 & 74.77\\
+                         & \text{TabDDPM+DP-T}& 13.84 & 16.86 & 5.08 & 70.46 & 70.49 & 70.25 & 70.18 & 70.21 & 91.73 & 45.15 & 97.28 & 94.34\\
+                         & \text{TabDDPM+DP-S}&  13.88 & 12.20 & 5.08& 70.34&70.36 & 70.70 & 70.60 & 70.63 & 73.78& 7.47 & 87.31 & 79.26\\
+                        & \underline{\text{TabDDPM+\SystemName}}&  \colorbox {lightblue}{14.28} & \colorbox {lightblue}{17.18} & 5.01 & 71.85 & 71.82 & 70.51 & 71.47 & 71.99 & 97.61 & 50.02 & 98.63 & 98.07\\
+\bottomrule[1.5pt]
+\end{tabular}
+}
+\vspace{-1em}
+\label{Table1}
+\end{table*}
