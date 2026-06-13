@@ -145,11 +145,7 @@ $$
 s^{*}_{\theta}(x_t, t) = \frac{\sum_{n=1}^N w_n \frac{\sqrt{\bar{\alpha}_t} x_{n0} - x_t}{1 - \bar{\alpha}_t}}{\sum_{n=1}^N w_n}, \quad w_n = \exp\left(- \frac{\|x_t - \sqrt{\bar{\alpha}_t} x_{n0}\|^2}{2(1 - \bar{\alpha}_t)}\right).
 $$
 
-The weights $w_n$ are large when $x_t$ is close to a scaled training row $\sqrt{\bar{\alpha}_t}x_{n0}$, so the denoising step naturally pulls generated samples toward the training manifold. Moreover, if two attribute subsets $A$ and $B$ are independent, the score decomposes additively:
-
-$$
-s^{*}_{\theta}(x_t, t) = \begin{bmatrix} s^{*}_{\theta}(x_{ta}, t) \\ s^{*}_{\theta}(x_{tb}, t) \end{bmatrix}.
-$$
+The weights $w_n$ are large when $x_t$ is close to a scaled training row $\sqrt{\bar{\alpha}_t}x_{n0}$, so the denoising step naturally pulls generated samples toward the training manifold. Moreover, if two attribute subsets $A$ and $B$ are independent, the score decomposes additively over the subsets; for example, $s^{*}_{\theta}(x_t, t)$ can be written as the concatenation of the scores for $x_{ta}$ and $x_{tb}$.
 
 This means memorization can happen **per attribute subset** even when full rows are not duplicated, motivating attribute-level rather than only row-level interventions.
 
