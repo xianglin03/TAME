@@ -1141,6 +1141,12 @@ class GaussianMultinomialDiffusion(torch.nn.Module):
 
     # @torch.no_grad()
     def sample(self, num_samples):
+        # === ABLATION CONFIG === # TODO change mode
+        # 选项: 'full', 'no_feedback', 'no_structured', 'no_alignment', 'baseline'
+        # 每次采样前改这里切换模式
+        ABLATION_MODE = 'full'  # <-- 改这里: full / no_feedback / no_structured / no_alignment / baseline
+        # =======================
+
         b = num_samples
         device = self.log_alpha.device
         z_norm = torch.randn((b, self.num_numerical_features), device=device)
@@ -1194,8 +1200,8 @@ class GaussianMultinomialDiffusion(torch.nn.Module):
             model_out_cat = model_out[:, self.num_numerical_features:]
             
             ########## gen new fun ##########
-            # if (i + 1) % 5 == 0: # 每隔5步引导一次 # TODO 是否采用原始方法/dp，或者还是使用新方法
-            if i == -100: # 不执行下面这段
+            if (i + 1) % 5 == 0: # 每隔5步引导一次 # TODO 是否采用原始方法/dp，或者还是使用新方法
+            # if i == -100: # 不执行下面这段
                 out = self.gaussian_p_sample(model_out_num, z_norm, t, clip_denoised=False)['out']
                 noise = torch.randn_like(z_norm)
                 nonzero_mask = (
@@ -1253,36 +1259,59 @@ class GaussianMultinomialDiffusion(torch.nn.Module):
                 
                 # 在这里调整超参数
                 aa, bb, cc, threshold = -5, 600000, 1, -1 # -1是为了没有阈值，一定使用mem引导 TODO 修改
-                
+
+                # ablation 开关
+                use_stepwise = (ABLATION_MODE != 'no_feedback')
+                use_structured = (ABLATION_MODE != 'no_structured')
+                use_alignment = (ABLATION_MODE != 'no_alignment')
+
+                if use_stepwise:
+                    save_path = f"memorization/mid_{task_name}.csv"
+                    syn_df.to_csv(save_path, index=False)
+                    cat_mem, num_mem, mem_weight = cal_mem_weight(dataname, save_path, train_data)
+                    mem = mem_weight
+                else:
+                    # v2: 跳过mem计算，用固定值（参数也固定，不用mem动态调整）
+                    mem = 0.3
+
                 # 如果大于阈值，就使用mem引导的办法
                 if mem > threshold:
                     # 运用分类器概率和梯度
                     x_hat = out['mean'].clone().float().requires_grad_(True).to(device)
-    
-                    syn_num, syn_cat, syn_target = split_num_cat_target(syn_data_np, info, num_inverse, cat_inverse) 
+
+                    syn_num, syn_cat, syn_target = split_num_cat_target(syn_data_np, info, num_inverse, cat_inverse)
                     x_hat_np = recover_data(syn_num, syn_cat, syn_target, info)
 
                     idx_name_mapping = info['idx_name_mapping']
                     idx_name_mapping = {int(key): value for key, value in idx_name_mapping.items()}
 
                     x_hat_np.rename(columns=idx_name_mapping, inplace=True)
-                    
+
                     # 获取最后一列并准备条件
                     last_column = train_data.iloc[:, -1]
                     # last_column = last_column.replace({" <=50K": 1, " >50K": 0})  # TODO 是否是adult?
                     last_column = last_column.values
                     last_column_tensor = torch.tensor(last_column, dtype=torch.float32).reshape(train_data.shape[0], 1)
                     y_condition = last_column_tensor.float().to(device)
-                    
+
                     # y_pred是概率矩阵，x_hat_grad是梯度
                     # gcat_stage = 0.8 # TODO 是否调整引导阶段
                     # x_hat_grad, y_pred, _= model_output(dataname, x_hat_np, y_condition, x_hat.shape[1], stage=gcat_stage)
                     x_hat_grad, y_pred, _= model_output(dataname, x_hat_np, y_condition, x_hat.shape[1])
-                    y_pred = torch.tensor(y_pred, dtype=torch.float32, device=device)           
+                    y_pred = torch.tensor(y_pred, dtype=torch.float32, device=device)
                     # y_pred = y_pred.unsqueeze(1)  # 形状从 [12000] -> [12000, 1], 概率矩阵
-                    
-                    para1, para2, para3 = aa * mem, bb * mem, cc * mem
-                        
+
+                    if use_stepwise:
+                        para1, para2, para3 = aa * mem, bb * mem, cc * mem
+                    else:
+                        # v2: 固定参数，取 mem=0.2 时的值（比 typical 小一点）
+                        para1, para2, para3 = -1.0, 120000, 0.2
+
+                    if not use_structured:
+                        para2 = 0
+                    if not use_alignment:
+                        para3 = 0
+
                     z_norm = x_hat + para1 * nonzero_mask * (torch.exp(0.5 * out["log_variance"]) - x_hat_grad * para2 - y_pred * para3) * noise
                     
                 # 如果小于阈值，那么就使用原始方法
